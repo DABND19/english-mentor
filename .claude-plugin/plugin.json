@@ -1,0 +1,8 @@
+{
+  "name": "english-mentor",
+  "description": "Reviews English writing and gives structured feedback for a non-native speaker.",
+  "version": "1.0.0",
+  "author": {
+    "name": "David Grigorenko"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "english-mentor",
+  "owner": {
+    "name": "David Grigorenko"
+  },
+  "plugins": [
+    {
+      "name": "english-mentor",
+      "source": "./",
+      "description": "Reviews English writing and gives structured feedback for a non-native speaker."
+    }
+  ]
+}
