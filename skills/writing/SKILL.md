@@ -16,7 +16,7 @@ If the message is just ordinary conversation in English with no command and no e
 
 ## Output format
 
-This format is FIXED — always use these exact five sections, in this exact order, with these exact headers. Do not improvise a different structure, skip a section, or reorder them, even if a section ends up short (e.g. write "No notable issues here" rather than omitting a section).
+This format is FIXED — always use these exact four sections, in this exact order, with these exact headers. Do not improvise a different structure, skip a section, or reorder them, even if a section ends up short (e.g. write "No notable issues here" rather than omitting a section).
 
 ### 1. Original with marked errors
 
@@ -47,43 +47,6 @@ A short paragraph (2-4 sentences) on how the writing is organized: does it flow 
 
 A short paragraph on register and style: formality level, word choice fit for context, anything too stiff/casual/repetitive for the apparent purpose of the text.
 
-### 5. Recurring patterns
-
-Reference error categories that keep coming up — both within this text (per section 2) and, when local persistence is available (see below), across past sessions via `track.py stats`. Name the pattern plainly (e.g. "articles keep getting dropped before singular nouns") rather than just repeating section 2. If there isn't enough history yet to spot a pattern, say so.
-
 ---
 
-Keep the tone encouraging and matter-of-fact — this is coaching, not a report card. No extra preamble before section 1, no summary after section 5.
-
-## Tracking patterns over time (local persistence)
-
-This skill ships with `scripts/track.py`, which logs every review to a local SQLite file (`~/.english-mentor/progress.db` by default) so patterns can be tracked across sessions, not just within one conversation.
-
-**This only works when you have real, persistent filesystem access** — e.g. running via Claude Code CLI or Pi on the user's machine. In a browser/claude.ai sandbox, the filesystem resets between conversations, so calling this script there is harmless but pointless (nothing will actually persist) — skip it in that context and fall back to within-conversation pattern tracking only.
-
-When persistence is available, use it like this. `scripts/track.py` is relative to this SKILL.md's own directory, not your current working directory — `cd` there first (the path is visible from wherever you read this file), then run the commands below.
-
-1. **Before writing feedback**, run:
-   ```
-   cd <this skill's directory> && python3 scripts/track.py stats
-   ```
-   Use the output to check whether any error categories are already recurring across past sessions, so you can reference them ("this is the Nth time articles have come up").
-
-2. **After writing feedback**, log the review by piping JSON to stdin:
-   ```
-   cd <this skill's directory> && python3 scripts/track.py log
-   ```
-   with stdin set to:
-   ```json
-   {
-     "original": "<the text the user submitted>",
-     "corrected": "<your corrected version>",
-     "errors": [
-       {"category": "articles", "note": "short explanation of this specific mistake"}
-     ],
-     "tips": ["<the 1-2 tips you gave>"]
-   }
-   ```
-   Use short, stable, lowercase `category` labels (e.g. `articles`, `prepositions`, `tense`, `word-choice`, `word-order`, `register`) and reuse existing categories rather than inventing near-duplicates, so counts aggregate meaningfully over time.
-
-If the script errors out (e.g. no filesystem access, permissions issue), don't block on it — just give the feedback normally and mention briefly that this session's progress couldn't be saved locally.
+Keep the tone encouraging and matter-of-fact — this is coaching, not a report card. No extra preamble before section 1, no summary after section 4.
