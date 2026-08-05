@@ -5,7 +5,7 @@ description: Give structured feedback on a piece of English writing to help a no
 
 # English Writing Feedback
 
-Helps a non-native English speaker improve his writing over time by reviewing text he submits and giving structured, actionable feedback.
+Helps a non-native English speaker improve their writing over time by reviewing text they submit and giving structured, actionable feedback.
 
 ## When this triggers
 
@@ -20,7 +20,7 @@ This format is FIXED — always use these exact five sections, in this exact ord
 
 ### 1. Original with marked errors
 
-Reproduce David's original text verbatim, but wrap every erroneous span in `` `inline code` `` markdown and append a bracketed reference number right after each one, e.g.:
+Reproduce the original text verbatim, but wrap every erroneous span in `` `inline code` `` markdown and append a bracketed reference number right after each one, e.g. (the fence below is only to set the example apart in these instructions — output the text as a normal paragraph, NOT inside a code block):
 
 ```
 I `go`[1] to `shop`[2] yesterday.
@@ -33,8 +33,8 @@ Number errors left to right in the order they appear in the text, starting at [1
 A numbered list matching the references from section 1 — one entry per number, same order:
 
 ```
-[1] "go" → "went": past tense needed here ("yesterday" signals past)
-[2] "shop" → "the shop": missing article
+[1] "go" -> "went": past tense needed here ("yesterday" signals past)
+[2] "shop" -> "the shop": missing article
 ```
 
 Keep each explanation short and concrete (the grammar rule or the more natural phrasing) — not academic. If the same underlying mistake repeats many times in one text, still number each occurrence in section 1, but you may group them under one explanation in section 2 (e.g. "[3][5][7] same article omission pattern as [2]").
@@ -59,24 +59,24 @@ Keep the tone encouraging and matter-of-fact — this is coaching, not a report 
 
 This skill ships with `scripts/track.py`, which logs every review to a local SQLite file (`~/.english-mentor/progress.db` by default) so patterns can be tracked across sessions, not just within one conversation.
 
-**This only works when you have real, persistent filesystem access** — e.g. running via Claude Code CLI on David's machine. In a browser/claude.ai sandbox, the filesystem resets between conversations, so calling this script there is harmless but pointless (nothing will actually persist) — skip it in that context and fall back to within-conversation pattern tracking only.
+**This only works when you have real, persistent filesystem access** — e.g. running via Claude Code CLI or Pi on the user's machine. In a browser/claude.ai sandbox, the filesystem resets between conversations, so calling this script there is harmless but pointless (nothing will actually persist) — skip it in that context and fall back to within-conversation pattern tracking only.
 
-When persistence is available, use it like this:
+When persistence is available, use it like this. `scripts/track.py` is relative to this SKILL.md's own directory, not your current working directory — `cd` there first (the path is visible from wherever you read this file), then run the commands below.
 
 1. **Before writing feedback**, run:
    ```
-   python3 scripts/track.py stats
+   cd <this skill's directory> && python3 scripts/track.py stats
    ```
    Use the output to check whether any error categories are already recurring across past sessions, so you can reference them ("this is the Nth time articles have come up").
 
 2. **After writing feedback**, log the review by piping JSON to stdin:
    ```
-   python3 scripts/track.py log
+   cd <this skill's directory> && python3 scripts/track.py log
    ```
    with stdin set to:
    ```json
    {
-     "original": "<the text David submitted>",
+     "original": "<the text the user submitted>",
      "corrected": "<your corrected version>",
      "errors": [
        {"category": "articles", "note": "short explanation of this specific mistake"}

@@ -1,6 +1,6 @@
 # english-mentor
 
-Claude Code skill that reviews English writing and gives structured feedback for a non-native speaker.
+Agent Skill (Claude Code plugin / Pi package) that reviews English writing and gives structured feedback for a non-native speaker.
 
 ## Trigger
 
@@ -16,22 +16,33 @@ Fixed 5-section format:
 4. Style
 5. Recurring patterns — including history from local tracking
 
-See [SKILL.md](SKILL.md) for the full spec.
+See [skills/writing/SKILL.md](skills/writing/SKILL.md) for the full spec.
 
 ## Install
+
+**Claude Code:**
 
 ```
 /plugin marketplace add DABND19/english-mentor
 /plugin install english-mentor@english-mentor
 ```
 
-## Progress tracking
-
-`scripts/track.py` logs each review to a local SQLite DB (`~/.english-mentor/progress.db`, override with `ENGLISH_MENTOR_DB`) so recurring error categories can be tracked across sessions.
+**[Pi](https://pi.dev):**
 
 ```
-python3 scripts/track.py stats [--json]   # summary of recurring error categories
-python3 scripts/track.py log              # reads a JSON payload from stdin, stores it
+pi install git:github.com/DABND19/english-mentor        # global
+pi install git:github.com/DABND19/english-mentor -l      # project-local
+```
+
+Pi auto-discovers the skill from the conventional `skills/` directory — no extra manifest needed.
+
+## Progress tracking
+
+`skills/writing/scripts/track.py` logs each review to a local SQLite DB (`~/.english-mentor/progress.db`, override with `ENGLISH_MENTOR_DB`) so recurring error categories can be tracked across sessions.
+
+```
+python3 skills/writing/scripts/track.py stats [--json]   # summary of recurring error categories
+python3 skills/writing/scripts/track.py log              # reads a JSON payload from stdin, stores it
 ```
 
 Only works with persistent filesystem access (e.g. Claude Code CLI). No-op in a browser sandbox.
